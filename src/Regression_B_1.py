@@ -38,7 +38,7 @@ X = stats.zscore(X)
 # Parameters for neural network classifier
 n_hidden_units = 1      # number of hidden units
 n_replicates = 1        # number of networks trained in each k-fold
-max_iter = 10000
+max_iter = 100
 
 # K-fold crossvalidation
 K = 10                   # only three folds to speed up this example
@@ -81,7 +81,7 @@ for (k, (train_index, test_index)) in enumerate(CV.split(X,y)):
     
     # Determine estimated class labels for test set
     y_test_est = net(X_test)
-    
+
     # Determine errors and errors
     se = (y_test_est.float()-y_test.float())**2 # squared error
     mse = (sum(se).type(torch.float)/len(y_test)).data.numpy() #mean

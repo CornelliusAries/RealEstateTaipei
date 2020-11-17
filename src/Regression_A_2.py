@@ -13,7 +13,7 @@ from scipy.io import loadmat
 import sklearn.linear_model as lm
 from sklearn import model_selection
 from toolbox_02450 import rlr_validate
-
+import matplotlib.pyplot as plt
 
 #Loading data from .csv
 filename = '../data/Real_estate_valuation_data_set.csv'
@@ -118,7 +118,19 @@ for train_index, test_index in CV.split(X,y):
         ylabel('Squared error (crossvalidation)')
         legend(['Train error','Validation error'])
         grid()
-    
+    if True:
+        plt.figure(figsize=(10,10))
+        y_est = X_test @ w_rlr[:,k]
+        y_true = y_test
+        axis_range = [np.min([y_est, y_true])-1,np.max([y_est, y_true])+1]
+        plt.plot(axis_range,axis_range,'k--')
+        plt.plot(y_true, y_est,'ob',alpha=.25)
+        plt.legend(['Perfect estimation','Model estimations'])
+        plt.title('House price of area unit: estimated versus true value (for last CV-fold)')
+        plt.ylim(axis_range); plt.xlim(axis_range)
+        plt.xlabel('True value')
+        plt.ylabel('Estimated value')
+        plt.grid()
     # To inspect the used indices, use these print statements
     print('Cross validation fold {0}/{1}:'.format(k+1,K))
     print('Train indices: {0}'.format(train_index))
